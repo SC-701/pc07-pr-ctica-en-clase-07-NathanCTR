@@ -1,0 +1,24 @@
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJCQ0NSLVNEREUiLCJzdWIiOiJqY2hhY29uNzA0NDVAdWZpZGUuYWMuY3IiLCJhdWQiOiJTRERFLVNpdGlvRXh0ZXJubyIsImV4cCI6MjUzNDAyMzAwODAwLCJuYmYiOjE3NzA4NTk0MzYsImlhdCI6MTc3MDg1OTQzNiwianRpIjoiZjhmYjY3MjYtOTZmMi00OGY3LTljMGItMjg5M2ExZGQ0NjFlIiwiZW1haWwiOiJqY2hhY29uNzA0NDVAdWZpZGUuYWMuY3IifQ.u2vo3GhwADsAkk-dhKqQbg5w9RZ9JHOVLdsuf6DRnrw
+
+{
+    "estado": true,
+    "mensaje": "Consulta exitosa",
+    "datos": [
+        {
+            "titulo": "Tipo de cambio de venta del dólar de los Estados Unidos de América",
+            "periodicidad": "Diaria",
+            "indicadores": [
+                {
+                    "codigoIndicador": "318",
+                    "nombreIndicador": "Tipo cambio venta",
+                    "series": [
+                        {
+                            "fecha": "2026-02-08",
+                            "valorDatoPorPeriodo": 496.44000000
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

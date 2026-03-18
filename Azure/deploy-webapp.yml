@@ -1,0 +1,77 @@
+# This workflow will build and push a React/Vite app to an Azure Web App when a commit is pushed to your default branch.
+#
+# To configure this workflow:
+#
+# 1. Download the Publish Profile for your Azure Web App from the Azure Portal
+# 2. Create a secret in your repository named AZURE_WEBAPP_PUBLISH_PROFILE_WEB, paste the publish profile contents as the value
+# 3. Update the AZURE_WEBAPP_NAME below with your actual Web App name
+#
+# For React/Vite applications in Azure
+
+name: Deploy Vehiculo React Web App to Azure
+
+env:
+  AZURE_WEBAPP_NAME: vehiculo-web    # Cambia esto por el nombre de tu Azure Web App para la aplicación React
+  AZURE_WEBAPP_PACKAGE_PATH: 'Semana 05-API y WEB/Vehiculo.React/Vehiculo.React.client/web.client'
+  NODE_VERSION: '18.x'                # Versión de Node.js
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'Semana 05-API y WEB/Vehiculo.React/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        run: npm ci
+
+      - name: Build React application
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        run: npm run build
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-app
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dist
+
+  deploy:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production-Web'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: react-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_WEB }}
+          package: .
