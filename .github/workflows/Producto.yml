@@ -11,7 +11,7 @@
 name: Build and deploy Web App
 
 env:
-  AZURE_WEBAPP_NAME: ProductoWeb2000    # Change this to your Azure Web App name
+  AZURE_WEBAPP_NAME: productointernet2000    # Change this to your Azure Web App name
   AZURE_WEBAPP_PACKAGE_PATH: './Producto.API/API'
   DOTNET_VERSION: '8.0'
 
